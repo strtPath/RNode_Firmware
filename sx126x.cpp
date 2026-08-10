@@ -142,6 +142,14 @@ bool sx126x::preInit() {
     SPI.begin();
   #endif
 
+  #if BOARD_MODEL == BOARD_WIO_TRACKER_L1
+    // The Wio L1 SX1262 uses DIO3 to supply its 1.8 V TCXO.
+    // Enable it before attempting the first SPI register read.
+    if (_busy != -1) { pinMode(_busy, INPUT); }
+    enableTCXO();
+    delay(10);
+  #endif
+
   // Check version (retry for up to 2 seconds)
   // TODO: Actually read version registers, not syncwords
   long start = millis();
