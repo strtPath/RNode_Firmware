@@ -122,6 +122,11 @@
   #define MODEL_FE            0xFE // Homebrew board, max 17dBm output power
   #define MODEL_FF            0xFF // Homebrew board, max 14dBm output power
 
+  #define PRODUCT_WIO_TRACKER_L1  0xE1
+  #define BOARD_WIO_TRACKER_L1    0x52
+  #define MODEL_WIO_L1_915        0xD1  // Pick unused values in your fork
+  #define MODEL_WIO_L1_868        0xD2
+
   #if defined(__AVR_ATmega1284P__)
     #define PLATFORM PLATFORM_AVR
     #define MCU_VARIANT MCU_1284P
@@ -894,6 +899,46 @@
       const int DISPLAY_CLK = PIN_T114_TFT_SCK;
       const int DISPLAY_BL_PIN = PIN_T114_TFT_BLGT;
       const int DISPLAY_RST = PIN_T114_TFT_RST;
+    
+#elif BOARD_MODEL == BOARD_WIO_TRACKER_L1
+      #define MODEM SX1262
+      #define HAS_DISPLAY false
+      #define HAS_BLUETOOTH false
+      #define HAS_BLE false
+      #define HAS_CONSOLE true
+      #define HAS_EEPROM false
+      #define HAS_PMU false
+      #define HAS_INPUT false
+      #define HAS_SLEEP false
+
+      #define HAS_TCXO true
+      #define HAS_BUSY true
+      #define DIO2_AS_RF_SWITCH true
+      #define HAS_RF_SWITCH_RX_TX true
+
+      #define CONFIG_UART_BUFFER_SIZE 6144
+      #define CONFIG_QUEUE_SIZE 6144
+      #define CONFIG_QUEUE_MAX_LENGTH 200
+      #define EEPROM_SIZE 296
+      #define EEPROM_OFFSET EEPROM_SIZE-EEPROM_RESERVED
+
+      const int pin_sclk  = 30; // P0.30
+      const int pin_miso  = 3;  // P0.03
+      const int pin_mosi  = 28; // P0.28
+      const int pin_cs    = 46; // P1.14
+      const int pin_dio   = 7;  // P0.07 / DIO1
+      const int pin_busy  = 42; // P1.10
+      const int pin_reset = 39; // P1.07
+
+      // L1 has an external receive-path enable, but no separate TX-enable line.
+      const int pin_rxen = 40;  // P1.08
+      const int pin_txen = -1;
+
+      // TCXO is controlled by SX1262 DIO3, not by an MCU GPIO.
+      const int pin_tcxo_enable = -1;
+
+      const int pin_led_rx = 33; // P1.01
+      const int pin_led_tx = 33;
 
     #else
       #error An unsupported nRF board was selected. Cannot compile RNode firmware.
