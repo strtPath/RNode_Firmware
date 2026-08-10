@@ -143,7 +143,7 @@ firmware-rak4631:
 	arduino-cli compile --log --fqbn rakwireless:nrf52:WisCoreRAK4631Board -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x51\""
 
 firmware-wio_tracker_l1:
-	arduino-cli compile --log --fqbn adafruit:nrf52:feather52840 -e --build-property "build.partitions=no_ota" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x52\""
+	arduino-cli compile --log --fqbn adafruit:nrf52:feather52840 -e --build-property "build.partitions=no_ota" --build-property "build.ldscript=$(CURDIR)/linker/nrf52840_s140_v7_wio.ld" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x52\""
 
 firmware-heltec_t114:
 	arduino-cli compile --log --fqbn Heltec_nRF52:Heltec_nRF52:HT-n5262 -e --build-property "build.partitions=no_ota" --build-property "upload.maximum_size=2097152" --build-property "compiler.cpp.extra_flags=\"-DBOARD_MODEL=0x3C\""
