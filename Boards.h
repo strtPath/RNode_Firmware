@@ -905,7 +905,7 @@
       #define HAS_DISPLAY false
       #define HAS_BLUETOOTH false
       #define HAS_BLE false
-      #define HAS_CONSOLE true
+      #define HAS_CONSOLE false
       #define HAS_EEPROM false
       #define HAS_PMU false
       #define HAS_INPUT false
